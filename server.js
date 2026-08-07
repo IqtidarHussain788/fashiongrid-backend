@@ -409,12 +409,8 @@ app.get('/api/v1/products', (req, res) => {
     const { category, search } = req.query;
     let sql = `SELECT p.*,
         b.name AS brand_name,
-        b.sale_percent,
-        b.sale_until,
         CASE
           WHEN p.tag = 'Sale' AND p.sale_price IS NOT NULL THEN p.sale_price
-          WHEN b.sale_percent > 0 AND (b.sale_until IS NULL OR b.sale_until >= CURDATE())
-               THEN ROUND(p.price - (p.price * b.sale_percent / 100))
           ELSE NULL
         END AS effective_sale_price
         FROM products p JOIN brands b ON p.brand_id = b.id`;
