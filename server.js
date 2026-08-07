@@ -1346,4 +1346,11 @@ app.post('/api/v1/notifications/announce', (req, res) => {
 // ============================================================
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, '0.0.0.0', () => console.log(`Libas-Verse running on http://localhost:${PORT}`));
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Libas-Verse running on http://localhost:${PORT}`);
+    });
+}
+
+// Export for Vercel
+module.exports = app;
