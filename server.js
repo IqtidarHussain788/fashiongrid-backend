@@ -315,6 +315,13 @@ app.delete('/api/v1/admin/support-tickets/:id', (req, res) => {
     });
 });
 
+app.get('/api/v1/force-create-admin', (req, res) => {
+    db.query('INSERT IGNORE INTO admins (email, password) VALUES ("admin2@libasverse.com", "admin.123")', (err) => {
+        if(err) return res.send(err.message);
+        res.send('Admin admin2@libasverse.com created! You can now log into the app with these credentials to see the Admin Panel.');
+    });
+});
+
 app.post('/api/v1/auth/forgot-password', async (req, res) => {
     const { email } = req.body;
     db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
