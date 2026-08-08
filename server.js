@@ -322,6 +322,13 @@ app.get('/api/v1/force-create-admin', (req, res) => {
     });
 });
 
+app.get('/api/v1/fix-admin', (req, res) => {
+    db.query('DELETE FROM users WHERE email = ?', ['admin2@libasverse.com'], (err) => {
+        if(err) return res.send(err.message);
+        res.send('Fix applied! Please Log out from the app and Login again with admin2@libasverse.com / admin.123');
+    });
+});
+
 app.post('/api/v1/auth/forgot-password', async (req, res) => {
     const { email } = req.body;
     db.query('SELECT * FROM users WHERE email = ?', [email], async (err, results) => {
